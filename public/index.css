@@ -63,6 +63,13 @@ body .glyphicon {
     position: fixed;
     top: 50%;
     transform: translateY(-50%);
+    background: #fff;
+    padding: 30px;
+    border: 1px solid;
+}
+.dialog-box button {
+    padding: 10px;
+    margin-top: 20px;
 }
 .float-right {
     float: right;

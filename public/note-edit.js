@@ -3,7 +3,7 @@ Vue.component('note-edit', {
     props: ['note'],
     data: function () {
         return {
-            dialog: DialogBox,
+            dialog: new DialogBox(),
             events: Event
         };
     },
@@ -30,6 +30,12 @@ Vue.component('note-edit', {
         deleteNote: function () {
             axios.delete('/notes/' + this.note.id).then(() => this.cancel());
         },
+        showDeletionDialog: function () {
+            this.dialog.action = () => this.deleteNote();
+        },
+        showCancellationDialog: function () {
+            this.dialog.action = () => this.cancel();
+        },
     },
     template: `
             <div class="note-edit">
@@ -55,36 +61,40 @@ Vue.component('note-edit', {
                     </table>
                 </div>
                 <div>
-                    <div>
-                        <div class="btn-group">
-                            <button @click="saveNote()" title="Save">
-                                <span class="glyphicon glyphicon-ok" title="Save" aria-hidden="true"></span>
-                            </button>
-                            <button @click="cancel()" title="Cancel">
-                                <span class="glyphicon glyphicon-remove" title="Cancel" aria-hidden="true"></span>
-                            </button>
-                        </div>
-                        <div class="btn-group">
-                            <button @click="deleteNote()" title="Delete">
-                                <span class="glyphicon glyphicon-trash" title="Delete" aria-hidden="true"></span>
-                            </button>
-                        </div>
-                        <div class="btn-group">
-                            <button @click="addTodo()" title="Add ToDo">
-                                <span class="glyphicon glyphicon-plus" title="Add" aria-hidden="true"></span>
-                                <span>Add todo</span>
-                            </button>
-                        </div>
-                        <div class="btn-group float-right">
-                            <button @click="undo()"  title="Undo">
-                                <span class="glyphicon glyphicon-chevron-left" title="Undo" aria-hidden="true"></span>
-                             </button>
-                            <button @click="redo()"  title="Redo">
-                                <span class="glyphicon glyphicon-chevron-right" title="Redo" aria-hidden="true"></span>
-                            </button>
-                        </div>
+                    <div class="btn-group">
+                        <button @click="saveNote()" title="Save">
+                            <span class="glyphicon glyphicon-ok" title="Save" aria-hidden="true"></span>
+                        </button>
+                        <button @click="showCancellationDialog()" title="Cancel">
+                            <span class="glyphicon glyphicon-remove" title="Cancel" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                    <div v-if="note.id" class="btn-group">
+                        <button @click="showDeletionDialog()" title="Delete">
+                            <span class="glyphicon glyphicon-trash" title="Delete" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                    <div class="btn-group">
+                        <button @click="addTodo()" title="Add ToDo">
+                            <span class="glyphicon glyphicon-plus" title="Add" aria-hidden="true"></span>
+                            <span>Add todo</span>
+                        </button>
+                    </div>
+                    <div class="btn-group float-right">
+                        <button @click="undo()"  title="Undo">
+                            <span class="glyphicon glyphicon-chevron-left" title="Undo" aria-hidden="true"></span>
+                         </button>
+                        <button @click="redo()"  title="Redo">
+                            <span class="glyphicon glyphicon-chevron-right" title="Redo" aria-hidden="true"></span>
+                        </button>
                     </div>
                 </div>
+                <dialog-box
+                    v-if="dialog.action"
+                    v-bind:text="dialog.text"
+                    @approve="dialog.approve()"
+                    @cancel="dialog.cancel()"
+                ></dialog-box>
             </div>
           `
 });

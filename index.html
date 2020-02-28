@@ -17,7 +17,7 @@
                         v-for="note in notes"
                         v-bind:note="note"
                         @edit="editingNote = note"
-                        @delete="deleteNote( note )"
+                        @delete="showDeletionDialog( note )"
                     ></note-view>
                 </div>
                 <div class="btn-group">
@@ -34,8 +34,8 @@
             <dialog-box
                 v-if="dialog.action"
                 v-bind:text="dialog.text"
-                @approve="dialog.action()"
-                @cancel="dialog.clear()"
+                @approve="dialog.approve()"
+                @cancel="dialog.cancel()"
             ></dialog-box>
         </div>
     </div>

@@ -22,6 +22,9 @@ window.onload = function() {
                 this.editingNote = null;
                 this.reloadNotes();
             },
+            showDeletionDialog: function ( note ) {
+                this.dialog.action = () => this.deleteNote( note );
+            },
         },
         mounted: function () { this.reloadNotes(); },
     })
