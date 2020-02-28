@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var path = require('path');
-const port = 8000;
+const port = 80;
 
 app.set('views', path.join(__dirname, 'pages'));
 
@@ -36,4 +36,4 @@ app.delete('/notes/:id', (req, res) => {
     res.status(200).send();
 });
 
-app.listen(port, () => console.log(`Aapp listening on port ${port}!`))
+app.listen(port, () => console.log(`App listening on port ${port}!`))
