@@ -41,7 +41,8 @@ body .glyphicon {
     padding: 5px;
 }
 .note-edit__todo-cb {
-    min-width: 10px;
+    min-width: 28px;
+    min-height: 28px;
 }
 .note-edit td {
     padding: 5px;
