@@ -59,6 +59,11 @@ body .glyphicon {
 .note-edit {
     padding: 10px;
 }
+.dialog-box {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+}
 .float-right {
     float: right;
 }

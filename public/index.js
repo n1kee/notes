@@ -190,8 +190,7 @@
                         <div class="btn-group">
                             <button @click="addTodo()" title="Add ToDo">
                                 <span class="glyphicon glyphicon-plus" title="Add" aria-hidden="true"></span>
-                                <span></span>
-                                Add todo
+                                <span>Add todo</span>
                             </button>
                         </div>
                         <div class="btn-group float-right">
@@ -206,7 +205,20 @@
                 </div>
             </div>
           `
-    })
+    });
+
+    Vue.component('dialog-box', {
+        props: ['text'],
+        template: `
+            <div class="dialog-box">
+                <div><span>{{ text }}</span></div>
+                <div class="btn-group">
+                    <button @click="$emit('approve')">Yes</button>
+                    <button @click="$emit('cancel')">No</button>
+                </div>
+            </div>
+          `
+    });
 
     const app = new Vue({
         el: '#app',
