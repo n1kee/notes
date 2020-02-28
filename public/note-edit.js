@@ -81,7 +81,8 @@ Vue.component('note-edit', {
     },
     template: `
             <div class="note-edit">
-                <h1>Edit note</h1>
+                <h1 v-if="note.id">Edit note</h1>
+                <h1 v-if="!note.id">Create note</h1>
                 <div class="note-edit__group">
                     <div class="note-edit__header">Name:</div>
                     <div><input v-model="note.name"></div>
