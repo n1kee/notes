@@ -3,6 +3,7 @@ Vue.component('note-edit', {
     props: ['note'],
     data: function () {
         return {
+            dialog: DialogBox,
             events: Event
         };
     },

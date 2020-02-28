@@ -1,8 +1,16 @@
 
 window.onload = function() {
+
+    class Note {
+        id;
+        name;
+        todo = [];
+    }
+
     const app = new Vue({
         el: '#app',
         data: {
+            dialog: DialogBox,
             notes: null,
             editingNote: null,
         },

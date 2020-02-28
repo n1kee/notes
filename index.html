@@ -31,11 +31,17 @@
                 v-bind:note="editingNote"
                 @cancel-edit="cancelNoteEdit()"
             ></note-edit>
-            <!-- dialog-box v-if="dialogAction" @approve="dialogAction()" @cancel="dialogAction = null"></dialog-box -->
+            <dialog-box
+                v-if="dialog.action"
+                v-bind:text="dialog.text"
+                @approve="dialog.action()"
+                @cancel="dialog.clear()"
+            ></dialog-box>
         </div>
     </div>
     <script src="events.js"></script>
     <script src="note-view.js"></script>
+    <script src="dialog-box.js"></script>
     <script src="note-edit.js"></script>
     <script src="index.js"></script>
 </body>
