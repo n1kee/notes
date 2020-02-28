@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var path = require('path');
-const port = 80;
+const port = process.env.PORT || 5000;
 
 app.set('views', path.join(__dirname, 'pages'));
 
