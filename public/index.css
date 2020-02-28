@@ -59,6 +59,13 @@ body .glyphicon {
 .note-edit {
     padding: 10px;
 }
+.dialog-box-bg {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
 .dialog-box {
     position: fixed;
     top: 50%;
