@@ -1,20 +1,19 @@
 module.exports = [
     {
         id: 1,
-        name: "AAA" ,
+        name: "Wednesday" ,
         todo: [
-            { isChecked: false, text: "AAA" },
-            { isChecked: true, text: "AAA" },
-            { isChecked: true, text: "AAA" },
+            { isChecked: false, text: "Finish the project" },
+            { isChecked: true, text: "Visit Bob" },
         ],
     },
     {
         id: 2,
-        name: "BBB" ,
+        name: "Friday" ,
         todo: [
-            { isChecked: false, text: "QQQ" },
-            { isChecked: true, text: "QQQ" },
-            { isChecked: true, text: "QQQ" },
+            { isChecked: false, text: "Buy a chicken" },
+            { isChecked: true, text: "Wake up early" },
+            { isChecked: true, text: "Go to the cinema" },
         ],
     },
 ];

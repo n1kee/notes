@@ -8,31 +8,73 @@ Vue.component('note-edit', {
         };
     },
     methods: {
+        /**
+         * Reverses the changes made by the last event.
+         */
         undo: function () { this.events.rollback(); },
+        /**
+         * Remakes the changes made by the last event.
+         */
         redo: function () { this.events.proceed(); },
+        /**
+         * Adds a todo item.
+         */
         addTodo: function () { new AddTodo( this.note ) },
+        /**
+         * Deletes a todo item.
+         */
         deleteTodo: function ( todoIdx ) { new DeleteTodo( this.note, todoIdx ) },
+        /**
+         * Toggles the todo item's isChecked value.
+         */
         checkTodo: function ( todo ) {  new CheckTodo( todo ); },
+        /**
+         * Changes the todo item's text value.
+         * @constructor
+         * @param {Todo} todo - The todo item.
+         * @param {KeyboardEvent} event - The change event of the text.
+         */
         changeTodoText: function ( todo, event ) {
             new ChangeTodoText( todo, event.target.value, todo.text );
         },
+        /**
+         * Emits the cancellation event for the edit.
+         */
         cancel: function () {  this.$emit('cancel-edit'); },
 
+        /**
+         * Saves the note.
+         */
         saveNote: function () {
             this.note.id ? this.updateNote(this.note) : this.createNote(this.note);;
         },
+        /**
+         * Creates the note.
+         */
         createNote: function () {
             axios.post('/notes', this.note).then(() => this.cancel());
         },
+        /**
+         * Updates the note.
+         */
         updateNote: function () {
             axios.put('/notes/' + this.note.id, this.note).then(() => this.cancel());
         },
+        /**
+         * Deletes the note.
+         */
         deleteNote: function () {
             axios.delete('/notes/' + this.note.id).then(() => this.cancel());
         },
+        /**
+         * Show the deletion dialog.
+         */
         showDeletionDialog: function () {
             this.dialog.action = () => this.deleteNote();
         },
+        /**
+         * Show the cancellation dialog.
+         */
         showCancellationDialog: function () {
             this.dialog.action = () => this.cancel();
         },

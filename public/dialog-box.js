@@ -1,13 +1,20 @@
 
+
 class DialogBox {
     text = "Are you sure ?";
     action;
 
+    /**
+     * Calls an action an closes the dialog box.
+     */
     approve() {
         this.action();
         this.cancel();
     }
 
+    /**
+     * Hides the dialog box.
+     */
     cancel() { this.action = null; }
 }
 
