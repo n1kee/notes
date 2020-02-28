@@ -1,9 +1,4 @@
 
-class Todo {
-    text;
-    isChecked = false;
-}
-
 class Event {
     target;
     params = [];
