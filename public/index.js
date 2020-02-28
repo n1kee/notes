@@ -89,26 +89,29 @@
         down( todo, newValue, oldValue ) { todo.text = oldValue; }
     }
 
-    class SaveNote extends Event {
-        up() { }
-
-        down() { }
-    }
 
     Vue.component('note-view', {
         props: ['note'],
         template: `
-            <div>
-                <div>{{ note.name }}</div>
+            <div class="note-view">
                 <div>
-                    <ul>
-                        <li v-for="todo in note.todo.slice(0, 2)">
-                            <input v-model="todo.isChecked" type="checkbox" disabled >
-                            {{ todo.text }}
+                    <span class="note-view__name">{{ note.name }}</span>
+                    <div class="float-right">
+                        <button @click="$emit('edit')">
+                            <span class="glyphicon glyphicon-pencil" title="Edit" aria-hidden="true"></span>
+                        </button>
+                        <button @click="$emit('delete')">
+                            <span class="glyphicon glyphicon-trash" title="Delete" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                </div>
+                <div>
+                    <ul class="note-view__todo-list">
+                        <li class="note-view__todo" v-for="todo in note.todo.slice(0, 2)">
+                            <input class="note-view__todo-cb" v-model="todo.isChecked" type="checkbox" disabled >
+                            <span class="note-view__todo-text">{{ todo.text }}</span>
                         </li>
                     </ul>
-                    <button @click="$emit('edit')">EDIT</button>
-                    <button @click="$emit('delete')">DELETE</button>
                 </div>
             </div>
           `
@@ -147,28 +150,58 @@
             },
         },
         template: `
-            <div>
-                <div>{{ note.name }}</div>
+            <div class="note-edit">
+                <h1>Edit note</h1>
+                <div class="note-edit__group">
+                    <div class="note-edit__header">Name:</div>
+                    <div><input v-model="note.name"></div>
+                </div>
+                <div class="note-edit__group">
+                    <div class="note-edit__header">ToDo:</div>
+                    <table class="note-edit__todo-list">
+                        <tr v-for="( todo, todoIdx ) in note.todo">
+                            <td><input class="note-edit__todo-cb" :checked="todo.isChecked" @change="checkTodo( todo )" type="checkbox" ></td>
+                            <td class="w-100"><textarea :value="todo.text" @change="changeTodoText( todo, $event )"></textarea></td>
+                            <td>
+                                <div class="btn-group">
+                                    <button @click="deleteTodo( todoIdx )" title="Delete">
+                                        <span class="glyphicon glyphicon-trash" title="Delete" aria-hidden="true"></span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
                 <div>
-                    <ul>
-                        <li v-for="( todo, todoIdx ) in note.todo">
-                            <input :checked="todo.isChecked" @change="checkTodo( todo )" type="checkbox" >
-                            <input :value="todo.text" @change="changeTodoText( todo, $event )">
-                            <button @click="deleteTodo( note, todoIdx )">DELETE</button>
-                        </li>
-                        <li><button @click="addTodo( note )">ADD</button></li>
-                    </ul>
                     <div>
-                        <div>
-                            <button @click="undo()">UNDO</button>
-                            <button @click="redo()">REDO</button>
+                        <div class="btn-group">
+                            <button @click="saveNote()" title="Save">
+                                <span class="glyphicon glyphicon-ok" title="Save" aria-hidden="true"></span>
+                            </button>
+                            <button @click="cancel()" title="Cancel">
+                                <span class="glyphicon glyphicon-remove" title="Cancel" aria-hidden="true"></span>
+                            </button>
                         </div>
-                        <div>
-                        
+                        <div class="btn-group">
+                            <button @click="deleteNote()" title="Delete">
+                                <span class="glyphicon glyphicon-trash" title="Delete" aria-hidden="true"></span>
+                            </button>
                         </div>
-                        <button @click="saveNote( note )">SAVE</button>
-                        <button @click="deleteNote( note )">DELETE</button>
-                        <button @click="cancel()">CANCEL</button>
+                        <div class="btn-group">
+                            <button @click="addTodo()" title="Add ToDo">
+                                <span class="glyphicon glyphicon-plus" title="Add" aria-hidden="true"></span>
+                                <span></span>
+                                Add todo
+                            </button>
+                        </div>
+                        <div class="btn-group float-right">
+                            <button @click="undo()"  title="Undo">
+                                <span class="glyphicon glyphicon-chevron-left" title="Undo" aria-hidden="true"></span>
+                             </button>
+                            <button @click="redo()"  title="Redo">
+                                <span class="glyphicon glyphicon-chevron-right" title="Redo" aria-hidden="true"></span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -180,10 +213,9 @@
         data: {
             notes: null,
             editingNote: null,
-            message: 'Hello Vue!'
         },
         methods: {
-            editNote: function () { this.editingNote = new Note(); },
+            editNewNote: function () { this.editingNote = new Note(); },
             deleteNote: function ( note ) { axios.delete('/notes/' + note.id).then(() => this.reloadNotes()) },
             reloadNotes: function () { axios.get('/notes').then(response => this.notes = response.data); },
             cancelNoteEdit: function () {

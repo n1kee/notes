@@ -1,7 +1,67 @@
+* {
+    margin: 0;
+}
+button {
+    line-height: 0;
+    padding: 5px;
+}
 li {
     list-style-type: none;
 }
+body .glyphicon {
+    top: 0;
+}
 .content {
-    max-width: 300px;
+    width: 350px;
     margin-top: 20px;
+    border: 1px solid gray;
+}
+.note-view-list {
+    padding-bottom: 10px;
+}
+.note-view {
+    border: 1px solid #bfbfbf;
+}
+.note-view .note-view__todo-cb {
+    margin: 0;
+}
+.note-view + .note-view {
+    border-top: none;
+}
+.note-edit__group {
+    padding: 0 0 10px;
+}
+.note-edit__header {
+    padding-bottom: 5px;
+}
+.note-edit__todo:not(:first-child) {
+    margin-top: 10px;
+}
+.note-edit td {
+    padding: 5px;
+}
+.note-edit__todo-cb {
+    min-width: 10px;
+}
+.note-edit td {
+    padding: 5px;
+}
+.note-edit table, .note-edit input, .note-edit textarea {
+    width: 100%;
+}
+.note-view__todo > *,
+.note-edit__todo > * {
+    vertical-align: middle;
+}
+.btn-group + .btn-group { margin-left: 10px; }
+.content,
+.note-view, .note-view__todo-list,
+.note-edit {
+    padding: 10px;
+}
+.float-right {
+    float: right;
+}
+.w-100 {
+    width: 100%;
 }
