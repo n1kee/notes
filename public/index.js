@@ -10,7 +10,7 @@ window.onload = function() {
     const app = new Vue({
         el: '#app',
         data: {
-            dialog: DialogBox,
+            dialog: new DialogBox(),
             notes: null,
             editingNote: null,
         },

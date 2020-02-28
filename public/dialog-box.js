@@ -1,9 +1,14 @@
 
 class DialogBox {
-    static text;
-    static action;
+    text = "Are you sure ?";
+    action;
 
-    static clear() { this.text = this.action = null; }
+    approve() {
+        this.action();
+        this.cancel();
+    }
+
+    cancel() { this.action = null; }
 }
 
 Vue.component('dialog-box', {
